@@ -2,6 +2,11 @@
 class BasePageLocators():
     LOGIN_LINK = ('css selector', "#login_link")
     LOGIN_LINK_INVALID = ('css selector', "#login_link_inc")
+    BUTTON_CARD = ('css selector', 'span.btn-group > a')
+
+class CardPageLocators():
+    MESSAGE_EMPTY = ('css selector', '#content_inner > p')
+    CARD = ('css selector', '.basket_summary')
 class MainPageLocators():
     LOGIN_LINK = ('css selector', "#login_link")
 

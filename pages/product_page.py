@@ -15,17 +15,17 @@ class ProductPage(BasePage):
         button_add_to_card.click()
 
 
-    def should_be_successful_added_massage(self):
+    def should_be_successful_added_message(self):
         # сообщение "был добавлен в вашу корзину."
-        successful_added_massage = self.is_element_present(*ProductPageLocators.ITEM_ADDED_TO_CARD_SUCCESS)
-        assert successful_added_massage, "Can't find successful_added_massage"
+        successful_added_message = self.is_element_present(*ProductPageLocators.ITEM_ADDED_TO_CARD_SUCCESS)
+        assert successful_added_message, "Can't find successful_added_message"
         name_of_the_added_item = self.driver.find_element(*ProductPageLocators.ITEM_ADDED_TO_CARD_SUCCESS).text
         print(f'Item "{name_of_the_added_item}" has been successfully added to the cart')
 
-    def should_be_successful_card_massage(self):
+    def should_be_successful_card_message(self):
         # сообщение "Ваша корзина удовлетворяет условиям предложения Deferred benefit offer"
-        successful_card_massage = self.is_element_present(*ProductPageLocators.FIELD_YOUR_CARD_SUCCESS)
-        assert successful_card_massage, "Can't find successful_card_massage"
+        successful_card_message = self.is_element_present(*ProductPageLocators.FIELD_YOUR_CARD_SUCCESS)
+        assert successful_card_message, "Can't find successful_card_message"
 
     def should_same_shop_item_name_with_added_item(self):
         # имя добавленного товара совпадает с именем товара из магазина
@@ -36,8 +36,9 @@ class ProductPage(BasePage):
 
     def should_be_correct_price_massage(self):
         # проверка корректности цены товара и корзины
-        correct_price_massage = self.is_element_present(*ProductPageLocators.PRICE_OF_THE_CARD)
-        assert correct_price_massage, "Can't find correct_price_massage"
+        correct_price_message = self.is_element_present(*ProductPageLocators.PRICE_OF_THE_CARD)
+        assert correct_price_message, "Can't find correct_price_message"
+
 
     def should_be_correct_price(self):
         # сообщение "Стоимость корзины теперь составляет {....} £"
@@ -48,10 +49,10 @@ class ProductPage(BasePage):
 
     def should_not_be_success_message(self):
         # при открытии страницы товара он не должен быть сразу добавлен в корзину
-        success_massage = self.is_not_element_present(*ProductPageLocators.ITEM_ADDED_TO_CARD_SUCCESS)
-        assert success_massage, 'success_massage arise before adding item to card'
+        success_message = self.is_not_element_present(*ProductPageLocators.ITEM_ADDED_TO_CARD_SUCCESS)
+        assert success_message, 'success_message arise before adding item to card'
 
     def should_success_message_disappear(self):
         # сообщение об успешном добавлении должна исчезнуть через некоторое время после появления
-        success_massage = self.is_disappeared(*ProductPageLocators.ITEM_ADDED_TO_CARD_SUCCESS)
-        assert success_massage, 'success_massage adding item to card not disappeared'
+        success_message = self.is_disappeared(*ProductPageLocators.ITEM_ADDED_TO_CARD_SUCCESS)
+        assert success_message, 'success_message adding item to card not disappeared'

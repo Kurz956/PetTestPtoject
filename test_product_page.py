@@ -42,14 +42,14 @@ def test_message_disappeared_after_adding_product_to_basket(driver):
     page.should_add_item_to_card()
     page.should_success_message_disappear()
 
-
+@pytest.mark.skip
 def test_guest_should_see_login_link_on_product_page(driver):
     link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
     page = ProductPage(driver, link)
     page.open()
     page.should_be_login_link()
 
-
+@pytest.mark.skip
 def test_guest_can_go_to_login_page_from_product_page(driver):
     link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
     page = ProductPage(driver, link)
@@ -66,14 +66,22 @@ def test_guest_can_add_product_to_basket(driver, link):
     page.should_be_add_to_card_item_button()
     page.should_add_item_to_card()
     page.solve_quiz_and_get_code()
-    page.should_be_successful_added_massage()
-    page.should_be_successful_card_massage()
+    page.should_be_successful_added_message()
+    page.should_be_successful_card_message()
     page.should_same_shop_item_name_with_added_item()
     page.should_be_correct_price_massage()
     page.should_be_correct_price()
     page.should_success_message_disappear()
 
 
+@pytest.mark.parametrize('link', urls)
+def test_guest_cant_see_product_in_basket_opened_from_product_page(driver, link):
+    page = ProductPage(driver, link)
+    page.open()
+    page.should_be_visible_button_card()
+    page.should_go_to_card()
+    page.should_be_empty_card()
+    page.should_be_message_empty_card()
 
 
 

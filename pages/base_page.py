@@ -3,7 +3,7 @@ from selenium.common import NoSuchElementException, TimeoutException
 from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from .locators import BasePageLocators
+from .locators import BasePageLocators, CardPageLocators
 
 
 
@@ -46,6 +46,19 @@ class BasePage():
         except TimeoutException:
             return False
         return True
+
+    def should_be_visible_button_card(self):
+        assert self.is_element_present(*BasePageLocators.BUTTON_CARD), 'button_card not visible'
+
+    def should_go_to_card(self):
+        button_card = self.driver.find_element(*BasePageLocators.BUTTON_CARD)
+        button_card.click()
+
+    def should_be_empty_card(self):
+        assert self.is_not_element_present(*CardPageLocators.CARD), 'card is not empty'
+
+    def should_be_message_empty_card(self):
+        assert self.is_element_present(*CardPageLocators.MESSAGE_EMPTY), 'no message that "card is not empty"'
 
     def solve_quiz_and_get_code(self):
         alert = self.driver.switch_to.alert
