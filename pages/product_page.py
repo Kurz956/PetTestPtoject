@@ -4,12 +4,12 @@ from .locators import ProductPageLocators
 
 class ProductPage(BasePage):
 
-    def should_be_add_to_card_stuff(self):
+    def should_be_add_to_card_item_button(self):
         # button_add_to_card присутствует на странице
         button_add_to_card = self.is_element_present(*ProductPageLocators.BUTTON_ADD_TO_CARD)
         assert button_add_to_card, "Can't find button_add_to_card"
 
-    def should_add_to_card_stuff(self):
+    def should_add_item_to_card(self):
         # button_add_to_card кликабельна
         button_add_to_card = self.driver.find_element(*ProductPageLocators.BUTTON_ADD_TO_CARD)
         button_add_to_card.click()
@@ -45,3 +45,13 @@ class ProductPage(BasePage):
         price_card = self.driver.find_element(*ProductPageLocators.PRICE_OF_THE_CARD).text
         assert price_item == price_card, f'price should be {price_item}, yours is {price_card}'
         print(f'final price is {price_card}')
+
+    def should_not_be_success_message(self):
+        # при открытии страницы товара он не должен быть сразу добавлен в корзину
+        success_massage = self.is_not_element_present(*ProductPageLocators.ITEM_ADDED_TO_CARD_SUCCESS)
+        assert success_massage, 'success_massage arise before adding item to card'
+
+    def should_success_message_disappear(self):
+        # сообщение об успешном добавлении должна исчезнуть через некоторое время после появления
+        success_massage = self.is_disappeared(*ProductPageLocators.ITEM_ADDED_TO_CARD_SUCCESS)
+        assert success_massage, 'success_massage adding item to card not disappeared'
