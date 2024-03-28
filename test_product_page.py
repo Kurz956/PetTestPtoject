@@ -5,7 +5,6 @@ from .pages.login_page import LoginPage
 from .pages.product_page import ProductPage
 import time
 
-# pytest -m login_user test_product_page.py
 
 testing_link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
 failed_tests = [7,]
@@ -17,6 +16,7 @@ urls = [f'{product_link}{offer_number}'
             marks=pytest.mark.xfail(reason='"added to the cart name" is not correct', strict=True)
         )
         for offer_number in range(7,8)] # range 10 (default by task)
+
 
 @pytest.mark.login_user
 class TestUserAddToBasketFromProductPage():
@@ -38,6 +38,7 @@ class TestUserAddToBasketFromProductPage():
         page.should_add_item_to_card()
         page.should_not_be_success_message()
 
+        
     @pytest.mark.need_review
     def test_user_can_add_product_to_basket(self, driver):
         link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
@@ -53,7 +54,6 @@ class TestUserAddToBasketFromProductPage():
         page.should_be_correct_price()
 
 
-
 @pytest.mark.xfail(reason='last step should fail, its correct')
 def test_guest_cant_see_success_message_after_adding_product_to_basket(driver):
     page = ProductPage(driver, 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/')
@@ -63,14 +63,10 @@ def test_guest_cant_see_success_message_after_adding_product_to_basket(driver):
     page.should_not_be_success_message()
 
 
-
 def test_guest_cant_see_success_message(driver):
     page = ProductPage(driver, 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/')
     page.open()
     page.should_not_be_success_message()
-
-
-
 
 
 @pytest.mark.xfail(reason='success adding massage do not disappered')
@@ -111,7 +107,6 @@ def test_guest_can_add_product_to_basket(driver, link):
     page.should_same_shop_item_name_with_added_item()
     page.should_be_correct_price_massage()
     page.should_be_correct_price()
-
 
 
 @pytest.mark.need_review
