@@ -1,29 +1,39 @@
 import math
+import time
+
+import pytest
 from selenium.common import NoSuchElementException, TimeoutException
 from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from .locators import BasePageLocators, CardPageLocators
+from .locators import BasePageLocators, BasketPageLocators
 
 
 
 
 class BasePage():
-
     def __init__(self, driver, url, timeout=10):
         self.driver = driver
         self.url = url
         self.driver.implicitly_wait(timeout)
 
+
     def open(self):
         self.driver.get(self.url)
+
 
     def go_to_login_page(self):
         login_link = self.driver.find_element(*BasePageLocators.LOGIN_LINK)
         login_link.click()
 
+
     def should_be_login_link(self):
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
+
+
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
+                                                                     " probably unauthorised user"
 
     def is_element_present(self, how, what):
         try:
@@ -32,12 +42,14 @@ class BasePage():
             return False
         return True
 
+
     def is_not_element_present(self, how, what, timeout=4):
         try:
             WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located((how, what)))
         except TimeoutException:
             return True
         return False
+
 
     def is_disappeared(self, how, what, timeout=4):
         try:
@@ -47,29 +59,20 @@ class BasePage():
             return False
         return True
 
-    def should_be_visible_button_card(self):
-        assert self.is_element_present(*BasePageLocators.BUTTON_CARD), 'button_card not visible'
-
-    def should_go_to_card(self):
-        button_card = self.driver.find_element(*BasePageLocators.BUTTON_CARD)
-        button_card.click()
-
-    def should_be_empty_card(self):
-        assert self.is_not_element_present(*CardPageLocators.CARD), 'card is not empty'
-
-    def should_be_message_empty_card(self):
-        assert self.is_element_present(*CardPageLocators.MESSAGE_EMPTY), 'no message that "card is not empty"'
 
     def solve_quiz_and_get_code(self):
-        alert = self.driver.switch_to.alert
-        x = alert.text.split(" ")[2]
-        answer = str(math.log(abs((12 * math.sin(float(x))))))
-        alert.send_keys(answer)
-        alert.accept()
         try:
             alert = self.driver.switch_to.alert
-            alert_text = alert.text
-            print(f"Your code: {alert_text}")
+            x = alert.text.split(" ")[2]
+            answer = str(math.log(abs((12 * math.sin(float(x))))))
+            alert.send_keys(answer)
             alert.accept()
         except NoAlertPresentException:
-            print("No second alert presented")
+            print("No first alert presented")
+            try:
+                alert = self.driver.switch_to.alert
+                alert_text = alert.text
+                print(f"Your code: {alert_text}")
+                alert.accept()
+            except NoAlertPresentException:
+                print("No second alert presented")

@@ -3,16 +3,15 @@ from .locators import ProductPageLocators
 
 
 class ProductPage(BasePage):
-
-    def should_be_add_to_card_item_button(self):
-        # button_add_to_card присутствует на странице
-        button_add_to_card = self.is_element_present(*ProductPageLocators.BUTTON_ADD_TO_CARD)
-        assert button_add_to_card, "Can't find button_add_to_card"
+    def should_be_add_item_to_card_button(self):
+        # add_item_to_card_button присутствует на странице
+        add_item_to_card_button = self.is_element_present(*ProductPageLocators.BUTTON_ADD_TO_CARD)
+        assert add_item_to_card_button, "Can't find button_add_to_card"
 
     def should_add_item_to_card(self):
-        # button_add_to_card кликабельна
-        button_add_to_card = self.driver.find_element(*ProductPageLocators.BUTTON_ADD_TO_CARD)
-        button_add_to_card.click()
+        # добавляет товар в корзину
+        add_item_to_card = self.driver.find_element(*ProductPageLocators.BUTTON_ADD_TO_CARD)
+        add_item_to_card.click()
 
 
     def should_be_successful_added_message(self):
@@ -31,7 +30,7 @@ class ProductPage(BasePage):
         # имя добавленного товара совпадает с именем товара из магазина
         shop_item_name = self.driver.find_element(*ProductPageLocators.ITEM_NAME).text
         name_of_the_added_item = self.driver.find_element(*ProductPageLocators.ITEM_ADDED_TO_CARD_SUCCESS).text
-        assert shop_item_name == name_of_the_added_item, f"names of the items are different" \
+        assert shop_item_name == name_of_the_added_item, f"Names of the items are different" \
                                                          f" '{name_of_the_added_item}' != '{shop_item_name}'"
 
     def should_be_correct_price_massage(self):
@@ -41,6 +40,7 @@ class ProductPage(BasePage):
 
 
     def should_be_correct_price(self):
+        # Проверка расчёта корзины при единичном добавлении товара
         # сообщение "Стоимость корзины теперь составляет {....} £"
         price_item = self.driver.find_element(*ProductPageLocators.PRICE_OF_THE_ITEM).text
         price_card = self.driver.find_element(*ProductPageLocators.PRICE_OF_THE_CARD).text
@@ -48,9 +48,10 @@ class ProductPage(BasePage):
         print(f'final price is {price_card}')
 
     def should_not_be_success_message(self):
-        # при открытии страницы товара он не должен быть сразу добавлен в корзину
-        success_message = self.is_not_element_present(*ProductPageLocators.ITEM_ADDED_TO_CARD_SUCCESS)
-        assert success_message, 'success_message arise before adding item to card'
+        # Сообщения "Товар успешно добавлен" быть не должно
+        assert self.is_not_element_present(*ProductPageLocators.ITEM_ADDED_TO_CARD_SUCCESS), \
+            "Success message is presented, but should not be"
+
 
     def should_success_message_disappear(self):
         # сообщение об успешном добавлении должна исчезнуть через некоторое время после появления
