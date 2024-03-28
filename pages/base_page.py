@@ -6,13 +6,13 @@ from selenium.common import NoSuchElementException, TimeoutException
 from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from .locators import BasePageLocators, BasketPageLocators
+from .locators import BasePageLocators
 
 
 
 
 class BasePage():
-    def __init__(self, driver, url, timeout=10):
+    def __init__(self, driver, url:str, timeout=10):
         self.driver = driver
         self.url = url
         self.driver.implicitly_wait(timeout)

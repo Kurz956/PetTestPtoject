@@ -1,15 +1,18 @@
-
 class BasePageLocators():
     LOGIN_LINK = ('css selector', "#login_link")
     LOGIN_LINK_INVALID = ('css selector', "#login_link_inc")
     BUTTON_CARD = ('css selector', 'span.btn-group > a')
     USER_ICON = ('css selector', ".icon-user")
 
+
 class BasketPageLocators():
     MESSAGE_EMPTY = ('css selector', '#content_inner > p')
     CARD = ('css selector', '.basket_summary')
+
+
 class MainPageLocators():
     LOGIN_LINK = ('css selector', "#login_link")
+
 
 class LoginPageLocators():
     FORM_LOGIN = ('css selector', "#login_form")
@@ -28,4 +31,3 @@ class ProductPageLocators():
     FIELD_YOUR_CARD_SUCCESS = ('xpath', "(//div[@class='alertinner '])[2]")
     PRICE_OF_THE_CARD = ('xpath', "(//div[@class='alertinner '])[3]//strong")
     PRICE_OF_THE_ITEM = ('css selector', '.col-sm-6.product_main>p.price_color')
-
