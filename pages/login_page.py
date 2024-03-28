@@ -7,7 +7,6 @@ from .locators import LoginPageLocators
 
 
 class LoginPage(BasePage):
-
     def should_be_login_page(self):
         self.should_be_login_url()
         self.should_be_login_form()
@@ -23,8 +22,6 @@ class LoginPage(BasePage):
         self.should_be_registration_password_2_field_send_keys(password)
         self.should_be_register_button()
         self.should_be_to_register_button_clickable()
-
-
 
 
     def should_be_register_button(self):
@@ -64,19 +61,19 @@ class LoginPage(BasePage):
 
 
     def should_be_login_url(self):
-        # реализуйте проверку на корректный url адрес
+        # реализация проверки на корректный url адрес
         current_url = self.driver.current_url
         login = 'login'
         assert login in current_url, f'"{login}" is not in current url: {current_url}'
 
 
     def should_be_login_form(self):
-        # реализуйте проверку, что есть форма логина
+        # реализация проверки, что есть форма логина
         form_login = self.is_element_present(*LoginPageLocators.FORM_LOGIN)
         assert form_login, "Can't find form_login"
 
 
     def should_be_register_form(self):
-        # реализуйте проверку, что есть форма регистрации на странице
+        # реализация проверки, что есть форма регистрации на странице
         form_registration = self.is_element_present(*LoginPageLocators.FORM_REGISTRATION)
         assert form_registration, "Can't find form_registration"

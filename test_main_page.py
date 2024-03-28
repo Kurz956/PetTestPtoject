@@ -2,8 +2,10 @@ import time
 
 import pytest
 from .pages.main_page import MainPage
-from .pages.basket_page import BasketPage
 from .pages.login_page import LoginPage
+from .pages.basket_page import BasketPage
+
+# pytest -s test_main_page.py
 
 @pytest.mark.login_guest
 class TestLoginFromMainPage():
@@ -31,7 +33,3 @@ class TestLoginFromMainPage():
         page.should_go_to_card()
         page.should_be_empty_card()
         page.should_be_message_empty_card()
-
-    # pytest -s test_main_page.py
-
-
