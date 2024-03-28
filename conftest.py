@@ -15,7 +15,7 @@ def driver(request):
         'prefs',
         {'intl.accept_language': user_language}
     )
-
+    options.add_argument("--headless=new") # Hide browsers
     driver = webdriver.Chrome(options=options)
 
     print('\nstart testing with chrome')
